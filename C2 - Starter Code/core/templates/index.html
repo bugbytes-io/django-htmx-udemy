@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Django & HTMX</title>
+
+
+</head>
+<body>
+
+    <h1>Hello World!</h1>
+
+    <p>{% lorem 2 %}</p>
+
+    <hr/>
+
+    <h3>Our products</h3>
+    <table id="product-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>101</td>
+                <td>Product A</td>
+            </tr>
+            <tr>
+                <td>102</td>
+                <td>Product B</td>
+            </tr>
+            <tr>
+                <td>103</td>
+                <td>Product C</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <button class="btn">Get more</button>
+</body>
+</html>
