@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Django & HTMX</title>
+    <script src="https://unpkg.com/htmx.org@2.0.4" integrity="sha384-HGfztofotfshcF7+8n44JQL2oJmowVChPTg48S+jvZoztPfvwD79OC/LTtG6dMp+" crossorigin="anonymous"></script>
+
+
+</head>
+<body hx-boost="true">
+
+    <h1>Hello World!</h1>
+    
+    <div id="site-text">
+        <p>{% lorem 2 %}</p>
+
+        <a href="{% url 'about' %}"
+            hx-target="#site-text"
+            hx-swap="innerHTML transition:true"
+            style="text-decoration: underline; color: blue; cursor: pointer;">About Us</a>
+    </div>
+
+    <hr/>
+
+    <h3>Our products</h3>
+    <table id="product-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>101</td>
+                <td>Product A</td>
+            </tr>
+            <tr>
+                <td>102</td>
+                <td>Product B</td>
+            </tr>
+            <tr>
+                <td>103</td>
+                <td>Product C</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <button class="btn" 
+        hx-get="{% url 'products' %}"
+        hx-target="#product-table > tbody"
+        hx-swap="innerHTML transition:true">Get more</button>
+
+        <form style="margin-top: 24px" 
+            hx-post="{% url 'index' %}"
+            hx-target="#product-table > tbody"
+            hx-swap="beforeend"
+            hx-on::after-request="document.getElementById('product').value = ''">
+
+            {% csrf_token %}
+            <label for="product">Product</label>
+            <input id="product" type="text" name="product" />
+        
+            <input type="submit" value="Submit" />
+        </form>    
+</body>
+</html>
