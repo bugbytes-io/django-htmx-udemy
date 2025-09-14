@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block scripts %}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        setTimeout(() => {
+            window.scrollTo(0, document.body.scrollHeight)
+        }, 150)
+
+        document.body.addEventListener("htmx:wsAfterMessage", function(evt) {
+            window.scrollTo(0, document.body.scrollHeight)
+        });        
+    });
+
+</script>
+{% endblock %}
+
+{% block content %}
+
+<div class="text-center">
+
+    <h1 class="text-4xl">{{ room.name }}</h1>
+
+    <div class="flex flex-col mx-4 lg:w-[75%] lg:mx-auto">
+        <div id="chat-box" class="flex-1 overflow-y-auto mb-4 card bg-base-100 shadow-lg p-4">
+            
+            {% for message in messages %}
+                {% include 'partials/message.html' %}
+            
+            {% empty %}
+                <p class="mt-4 text-xl" id="no-messages">There are currently no messages in this room!</p>
+            {% endfor %}
+        </div>
+
+        <!-- Form to allow the user to add new messages -->
+        <form id="chat-form" class="sticky bottom-0 bg-base-100 shadow-xl p-4 rounded-t-xl border-t border-base-300"
+            hx-ext="ws"
+            ws-connect="/ws/chat/{{ room.slug }}/"
+            ws-send
+            hx-on::ws-after-send="this.reset()"
+            hx-on::ws-after-message="let p = document.getElementById('no-messages'); 
+            if (p) { p.remove() }">
+            <div class="flex gap-1">
+                <input type="text"
+                    id="chat-message-input"
+                    name="message"
+                    minlength="2"
+                    class="input input-bordered flex-1"
+                    placeholder="Type your message..." />
+                <button type="submit" class="btn btn-primary">Send</button>
+            </div>
+        </form>
+    </div>
+
+</div>
+
+{% endblock %}

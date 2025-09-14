@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="flex justify-center items-center">
+    <div class="bg-white p-6 rounded-lg w-full lg:w-3/4">
+        <h1 class="text-4xl">User Settings</h1>
+
+        <p class="text-xl mt-4">Change your settings below</p>
+
+        {% include 'partials/settings-form.html' %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,36 @@
+databases:
+  - name: chat_projectdb
+    plan: free
+    databaseName: chat_project
+    user: chat_project
+    region: frankfurt
+
+services:
+  - type: web
+    plan: free
+    name: chat_project
+    region: frankfurt
+    runtime: python
+    buildCommand: './build.sh'
+    startCommand: 'python -m daphne chat_project.asgi:application'
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: chat_projectdb
+          property: connectionString
+      - key: REDIS_URL
+        fromService:
+          name: chat-channel-layer
+          type: keyvalue
+          property: connectionString        
+      - key: SECRET_KEY
+        generateValue: true
+      - key: WEB_CONCURRENCY
+        value: 4
+
+  - type: keyvalue
+    plan: free
+    region: frankfurt
+    name: chat-channel-layer
+    ipAllowList: # Allow external connections from everywhere
+      - source: 0.0.0.0/0

@@ -1,0 +1,18 @@
+  <nav class="navbar bg-base-100">
+    <a class="btn btn-ghost text-xl">Book Tracker</a>
+
+    {% if user.is_authenticated %}
+        <!-- User is authenticated: Show Logout button -->
+        <a href="{% url 'account_logout' %}" class="text-gray-800 hover:bg-gray-100 px-4 py-2 rounded-md">
+        Logout
+        </a>
+    {% else %}
+        <!-- User is not authenticated: Show Login and Register links -->
+        <a href="{% url 'account_login' %}" class="text-gray-800 hover:bg-gray-100 px-4 py-2 rounded-md">
+        Login
+        </a>
+        <a href="{% url 'account_signup' %}" class="ml-4 text-gray-800 hover:bg-gray-100 px-4 py-2 rounded-md">
+        Register
+        </a>
+    {% endif %}
+</nav>

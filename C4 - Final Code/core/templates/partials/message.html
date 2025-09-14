@@ -1,0 +1,30 @@
+<div hx-swap-oob="beforeend:#chat-box">
+    <div class="chat chat-start">
+        <div class="chat-image avatar">
+            <div class="w-10 rounded-full">
+
+                {% if message.user.profile_picture %}
+                    <img
+                        alt="Current Profile Picture"
+                        src="{{ message.user.profile_picture.url }}"
+                    />
+                {% else %}
+                    <img
+                        alt="Tailwind CSS chat bubble component"
+                        src="https://img.daisyui.com/images/profile/demo/kenobee@192.webp"
+                    />
+                {% endif %}
+            </div>
+        </div>
+        <div class="chat-header">
+            {{ message.user.username }}
+            <time class="text-xs opacity-50">
+                {{ message.created_at }}
+            </time>
+        </div>
+        <div class="chat-bubble chat-bubble-primary">
+            {{ message.content }}
+        </div>
+        <div class="chat-footer opacity-50">Delivered</div>
+    </div>
+</div>

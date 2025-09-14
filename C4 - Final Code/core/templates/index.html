@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="flex justify-center items-center">
+    <div class="bg-white p-6 rounded-lg w-full lg:w-3/4">
+        <h1 class="text-4xl">Django/HTMX Chatroom</h1>
+
+        <p class="text-xl mt-4">Available chat rooms</p>
+
+        <ul class="mt-2">
+            {% for room in rooms %}
+                <li>
+                    <a href="{% url 'room' room.slug %}" 
+                        class="text-primary hover:text-primary-focus underline text-lg">
+                        {{ room.name }}
+                    </a>
+                </li>
+            {% empty %}
+                <p>There are no rooms available.</p>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}

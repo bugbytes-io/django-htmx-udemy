@@ -1,0 +1,32 @@
+<tr>
+    <td>
+        <a class="text-blue-500 hover:text-blue-700 hover:underline cursor-pointer"
+        hx-get="{% url 'book-detail' book.pk %}"
+        hx-target="#container"
+        hx-push-url="true">{{ book.name }}</a>
+    </td>
+    <td>{{ book.genre }}</td>
+    <td>
+        <button class="btn btn-sm btn-error"
+            hx-delete="{% url 'delete-book' book.pk %}"
+            hx-on:book-deleted="fadeOutAndRemove(this.closest('tr'));
+                gsap.to('#book-form', {rotation: 360, x: 100, y:200, duration: 1});
+                gsap.to('#book-form', {rotation: 0, x: 0, y:0, duration: 1, delay: 1});
+                gsap.to('button', {scale: 1.5, x:100, duration: 1, delay: 1});
+                gsap.to('button', {scale: 0.5, x:0, duration: 1, delay: 2, rotate: -360});
+                gsap.to('button', {scale: 1, x:0, duration: 1, delay: 3, rotate: 0});"
+            hx-trigger='confirmed'
+            onClick="Swal.fire({
+                title: 'Confirm',
+                text: 'Are you sure you want to delete {{ book.name }}?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, destroy it!',
+                showCloseButton: true,
+            }).then((result)=>{
+                if(result.isConfirmed){
+                  htmx.trigger(this, 'confirmed');  
+                } 
+            })">Delete</button>
+    </td>
+</tr>

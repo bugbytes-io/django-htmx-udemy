@@ -1,0 +1,25 @@
+<table class="table mt-8" id="book-table">
+    <thead>
+        <tr>
+            <th>NAME</th>
+            <th>GENRE</th>
+            <th>ACTIONS</th>
+        </tr>
+    </thead>
+    <tbody hx-on::after-settle="
+        this.firstChild.style.background = 'lightgreen';
+        setTimeout(() => this.firstChild.style.background = 'white', 2000);
+        clearForm();
+        ">
+
+        {% for book in books %}
+            {% include 'partials/book-row.html' %}
+        {% empty %}
+        <tr class="empty-message">
+            <td>You have no books in your library</td>
+        </tr>
+        {% endfor %}                
+        
+    </tbody>
+
+</table>

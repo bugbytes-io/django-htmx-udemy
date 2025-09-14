@@ -1,0 +1,47 @@
+<form id="settings-form"
+    hx-post="{% url 'settings' %}"
+    hx-swap="outerHTML"
+    hx-encoding="multipart/form-data">
+    {% csrf_token %}
+
+    <fieldset class="fieldset">
+        <legend class="fieldset-legend">{{ form.first_name.label }}</legend>
+        {{ form.first_name }}
+        {% if form.first_name.errors %}
+            {% for error in form.first_name.errors %}
+                <p class="text-red-500">{{ error }}</p>
+            {% endfor %}
+        {% endif %}
+    </fieldset>
+
+    <fieldset class="fieldset">
+        <legend class="fieldset-legend">{{ form.last_name.label }}</legend>
+        {{ form.last_name }}
+        {% if form.last_name.errors %}
+            {% for error in form.last_name.errors %}
+                <p class="text-red-500">{{ error }}</p>
+            {% endfor %}
+        {% endif %}
+    </fieldset>
+
+    <fieldset class="fieldset">
+        <legend class="fieldset-legend">{{ form.profile_picture.label }}</legend>
+        {{ form.profile_picture }}
+        {% if form.profile_picture.errors %}
+            {% for error in form.profile_picture.errors %}
+                <p class="text-red-500">{{ error }}</p>
+            {% endfor %}
+        {% endif %}
+    </fieldset>
+
+        
+    {% if user.profile_picture %}
+        <div class="mt-4">
+            <p class="mb-2">Your current profile picture</p>
+            <img src="{{ user.profile_picture.url }}" alt="Current Profile Picture" class="img-thumbnail" style="max-width: 200px;">
+        </div>
+    {% endif %}       
+
+    <button type="submit" class="btn btn-primary mt-4">Submit</button>
+
+</form> 

@@ -1,0 +1,32 @@
+<form id="book-form" 
+    hx-put="{% url 'book-detail' book.pk %}"
+    hx-target="#container"
+    hx-on::after-request="this.reset()">
+
+    {% csrf_token %}
+
+    <div id="form-errors" class="text-red-500">
+        {{ form.non_field_errors }}
+    </div>
+
+    <fieldset class="fieldset">
+        <label class="label text-lg" for="{{ form.name.id_for_label }}">{{ form.name.label }}</label>
+        {{ form.name }}
+
+        <div class="form-field-errors">
+            {% if form.name.errors %}
+                {% for error in form.name.errors %}
+                    <p class="text-red-500">{{ error }}</p>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </fieldset>
+
+    <fieldset class="fieldset">
+        <label class="label text-lg" for="{{ form.genre.id_for_label }}">{{ form.genre.label }}</label>
+        {{ form.genre }}
+    </fieldset>
+
+    <button class="btn btn-success mt-4">Submit</button>
+
+</form>

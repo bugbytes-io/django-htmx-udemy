@@ -1,0 +1,27 @@
+<div class="flex flex-col gap-4"
+    x-data="{updating: false}">
+    <h1 class="text-4xl text-green-500">{{ book.name }}</h1>
+
+    <p>This is a {{ book.get_genre_display }} book that you added on {{ book.date_created }}</p>
+
+    <div class="flex gap-x-3">
+        <button class="btn btn-sm btn-primary"
+            @click="updating=true"
+            x-show="!updating">Update Book</button>
+
+        <button class="btn btn-sm btn-primary"
+            @click="updating=false"
+            x-show="updating">Cancel Update</button>
+
+        <button class="btn btn-sm btn-error"
+            hx-get="{% url 'index' %}"
+            hx-target="#container"
+            hx-swap="outerHTML"
+            hx-select="#container"
+            hx-push-url="true">< Back</button>
+    </div>
+
+    <div x-show="updating">
+        {% include 'partials/book-update-form.html' %}
+    </div>
+</div>
